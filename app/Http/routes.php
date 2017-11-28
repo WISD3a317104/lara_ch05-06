@@ -23,5 +23,9 @@ Route::group(['prefix'=>'student'],function(){
          'uses'=>'StudentController@getStudentScore'
     ])->where(['student_no'=>'s[0-9]{10}','subject'=>'(chinese|english|math)']);
 });
-
+Route::controller('board','BoardController');
+#Route::get('cool', 'Cool\TestController@index');
+Route::group(['namespace'=>'Cool'],function(){
+    Route::get('cool', 'TestController@index');
+});
 
