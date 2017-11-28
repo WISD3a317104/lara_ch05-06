@@ -10,22 +10,17 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::get('/', 'HomeController@index');
 Route::pattern('student_no','s[0-9]{10}');
-Route::get('/', function () {
-    return view('welcome');
-});
+
 Route::group(['prefix'=>'student'],function(){
     Route::get('{student_no}',[
         'as'=>'student',
-        'uses'=>function($student_no){
-             return "學號:".$student_no;
-        }
+        'uses'=>'StudentController@getStudentData'
     ]);
     Route::get('{student_no}/score/{subject?}',[
         'as'=>'student.score',
-        'uses'=>function($student_no,$subject=null){
-            return "學號:".$student_no."的".((is_null($subject))?"所有項目":$subject)."成績";
-        }
+         'uses'=>'StudentController@getStudentScore'
     ])->where(['student_no'=>'s[0-9]{10}','subject'=>'(chinese|english|math)']);
 });
 
